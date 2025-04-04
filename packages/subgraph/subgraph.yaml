@@ -6,7 +6,7 @@ schema:
 dataSources:
     - kind: ethereum/contract
       name: YourToken
-      network: megaeth-testnet
+      network: localhost
       source:
           abi: YourToken
           address: "0x9C61D2Ac8e57554cB09c1dbF7B591a520dD54d5C"
