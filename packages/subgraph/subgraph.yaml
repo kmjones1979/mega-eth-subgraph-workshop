@@ -2,33 +2,30 @@ specVersion: 1.3.0
 description: YourToken
 repository: https://github.com/scaffold-eth/se-2/packages/subgraph/
 schema:
-  file: ./src/schema.graphql
+    file: ./src/schema.graphql
 dataSources:
-  - kind: ethereum/contract
-    name: YourToken
-    network: localhost
-    source:
-      abi: YourToken
-      address: "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.9
-      language: wasm/assemblyscript
-      entities:
-        - Approval
-        - GreetingChange
-        - OwnershipTransferred
-        - Transfer
-      abis:
-        - name: YourToken
-          file: ./abis/localhost_YourToken.json
-      eventHandlers:
-        - event: Approval(indexed address,indexed address,uint256)
-          handler: handleApproval
-        - event: GreetingChange(indexed address,string,bool,uint256)
-          handler: handleGreetingChange
-        - event: OwnershipTransferred(indexed address,indexed address)
-          handler: handleOwnershipTransferred
-        - event: Transfer(indexed address,indexed address,uint256)
-          handler: handleTransfer
-      file: ./src/mapping.ts
+    - kind: ethereum/contract
+      name: YourToken
+      network: megaeth-testnet
+      source:
+          abi: YourToken
+          address: "0x9C61D2Ac8e57554cB09c1dbF7B591a520dD54d5C"
+      mapping:
+          kind: ethereum/events
+          apiVersion: 0.0.9
+          language: wasm/assemblyscript
+          entities:
+              - Approval
+              - OwnershipTransferred
+              - Transfer
+          abis:
+              - name: YourToken
+                file: ./abis/localhost_YourToken.json
+          eventHandlers:
+              - event: Approval(indexed address,indexed address,uint256)
+                handler: handleApproval
+              - event: OwnershipTransferred(indexed address,indexed address)
+                handler: handleOwnershipTransferred
+              - event: Transfer(indexed address,indexed address,uint256)
+                handler: handleTransfer
+          file: ./src/mapping.ts

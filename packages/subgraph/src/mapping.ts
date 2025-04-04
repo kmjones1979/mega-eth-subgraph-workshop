@@ -1,15 +1,9 @@
 import {
     Approval as ApprovalEvent,
-    GreetingChange as GreetingChangeEvent,
     OwnershipTransferred as OwnershipTransferredEvent,
     Transfer as TransferEvent,
 } from "../generated/YourToken/YourToken";
-import {
-    Approval,
-    GreetingChange,
-    OwnershipTransferred,
-    Transfer,
-} from "../generated/schema";
+import { Approval, OwnershipTransferred, Transfer } from "../generated/schema";
 
 export function handleApproval(event: ApprovalEvent): void {
     let entity = new Approval(
@@ -17,22 +11,6 @@ export function handleApproval(event: ApprovalEvent): void {
     );
     entity.owner = event.params.owner;
     entity.spender = event.params.spender;
-    entity.value = event.params.value;
-
-    entity.blockNumber = event.block.number;
-    entity.blockTimestamp = event.block.timestamp;
-    entity.transactionHash = event.transaction.hash;
-
-    entity.save();
-}
-
-export function handleGreetingChange(event: GreetingChangeEvent): void {
-    let entity = new GreetingChange(
-        event.transaction.hash.concatI32(event.logIndex.toI32())
-    );
-    entity.greetingSetter = event.params.greetingSetter;
-    entity.newGreeting = event.params.newGreeting;
-    entity.premium = event.params.premium;
     entity.value = event.params.value;
 
     entity.blockNumber = event.block.number;
