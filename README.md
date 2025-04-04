@@ -1,4 +1,42 @@
-# 🏗 Scaffold-ETH 2
+# MEGAETH Subgraph Workshop
+
+This repo is an example full stack dapp that can be easily deployed to MEGAETH. It comes with an example contract (ERC20) configured for deployment with Harhat, a frontend integration with React (NextJS) and a working Subgraph which can all be deployed locally or directly to MEGAETH's Testnet.
+
+## 🎯 Project Overview
+
+This workshop toolkit provides everything you need to build and deploy a full-stack decentralized application (dapp) with:
+
+-   Smart contract development and deployment
+-   Frontend integration with Next.js
+-   Subgraph integration for efficient blockchain data querying
+-   Local development environment
+-   Production deployment capabilities
+
+## 📚 Table of Contents
+
+-   [About The Graph](#about-the-graph)
+-   [About Scaffold-ETH 2](#-about-scaffold-eth-2)
+-   [Project Structure](#-project-structure)
+-   [Requirements](#requirements)
+-   [Quickstart](#quickstart)
+-   [Development Workflow](#-development-workflow)
+-   [The Graph Integration](#-setup-the-graph-integration)
+-   [Deployment Guide](#-deployment-guide)
+-   [Troubleshooting](#-troubleshooting)
+-   [Contributing](#contributing-to-scaffold-eth-2)
+
+## About The Graph
+
+The Graph is a protocol that organizes and indexes blockchain data, enabling developers to easily query and access this data for building decentralized applications (dapps) without needing to run their own data servers or indexing infrastructure.
+
+### Key Benefits
+
+-   Efficient data querying
+-   Real-time updates
+-   Cost-effective data access
+-   Decentralized infrastructure
+
+## 🏗 About Scaffold-ETH 2
 
 <h4 align="center">
   <a href="https://docs.scaffoldeth.io">Documentation</a> |
@@ -9,62 +47,92 @@
 
 ⚙️ Built using NextJS, RainbowKit, Hardhat, Wagmi, Viem, and Typescript.
 
-- ✅ **Contract Hot Reload**: Your frontend auto-adapts to your smart contract as you edit it.
-- 🪝 **[Custom hooks](https://docs.scaffoldeth.io/hooks/)**: Collection of React hooks wrapper around [wagmi](https://wagmi.sh/) to simplify interactions with smart contracts with typescript autocompletion.
-- 🧱 [**Components**](https://docs.scaffoldeth.io/components/): Collection of common web3 components to quickly build your frontend.
-- 🔥 **Burner Wallet & Local Faucet**: Quickly test your application with a burner wallet and local faucet.
-- 🔐 **Integration with Wallet Providers**: Connect to different wallet providers and interact with the Ethereum network.
+## 📁 Project Structure
 
-![Debug Contracts tab](https://github.com/scaffold-eth/scaffold-eth-2/assets/55535804/b237af0c-5027-4849-a5c1-2e31495cccb1)
+```
+mega-eth-subgraph-workshop/
+├── packages/
+│   ├── hardhat/          # Smart contract development
+│   ├── nextjs/           # Frontend application
+│   └── subgraph/         # Graph protocol integration
+├── .github/              # GitHub workflows and templates
+├── .husky/               # Git hooks
+└── .yarn/                # Yarn package management
+```
 
 ## Requirements
 
 Before you begin, you need to install the following tools:
 
-- [Node (>= v20.18.3)](https://nodejs.org/en/download/)
-- Yarn ([v1](https://classic.yarnpkg.com/en/docs/install/) or [v2+](https://yarnpkg.com/getting-started/install))
-- [Git](https://git-scm.com/downloads)
+-   [Node (>= v20.18.3)](https://nodejs.org/en/download/)
+-   Yarn ([v1](https://classic.yarnpkg.com/en/docs/install/) or [v2+](https://yarnpkg.com/getting-started/install))
+-   [Git](https://git-scm.com/downloads)
+-   [Docker](https://docs.docker.com/get-started/get-docker/)
+
+## Customizing the token
+
+Edit your smart contract located in `packages/hardhat/contracts/YourToken.sol`
+
+Optionally modify the constructor with your own token name and symbol.
+
+```
+    constructor(address _owner) ERC20("YourToken", "YT") Ownable(_owner) {
+        _mint(_owner, 21000000000000000000000000);
+    }
+```
+
+Optionally, modify the deploy script to take ownership of the contract.
+
+```
+  const owner = "0x0000000000000000000000000000000000000000"; // add your address here
+
+  await deploy("YourToken", {
+    from: deployer,
+    // Contract constructor arguments
+    args: [owner], // use the owner variable to set who owns the contract during deployment
+    log: true,
+    // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
+    // automatically mining the contract deployment transaction. There is no effect on live networks.
+    autoMine: true,
+  });
+```
 
 ## Quickstart
 
 To get started with Scaffold-ETH 2, follow the steps below:
 
-1. Install dependencies if it was skipped in CLI:
+1. Clone the repository:
 
+```bash
+git clone https://github.com/your-org/mega-eth-subgraph-workshop.git
+cd mega-eth-subgraph-workshop
 ```
-cd my-dapp-example
+
+2. Install dependencies:
+
+```bash
 yarn install
 ```
 
-2. Run a local network in the first terminal:
+3. Run a local network in the first terminal:
 
-```
+```bash
 yarn chain
 ```
 
-This command starts a local Ethereum network using Hardhat. The network runs on your local machine and can be used for testing and development. You can customize the network configuration in `packages/hardhat/hardhat.config.ts`.
+4. On a second terminal, deploy the test contract:
 
-3. On a second terminal, deploy the test contract:
-
-```
+```bash
 yarn deploy
 ```
 
-This command deploys a test smart contract to the local network. The contract is located in `packages/hardhat/contracts` and can be modified to suit your needs. The `yarn deploy` command uses the deploy script located in `packages/hardhat/deploy` to deploy the contract to the network. You can also customize the deploy script.
+5. On a third terminal, start your NextJS app:
 
-4. On a third terminal, start your NextJS app:
-
-```
+```bash
 yarn start
 ```
 
-Visit your app on: `http://localhost:3000`. You can interact with your smart contract using the `Debug Contracts` page. You can tweak the app config in `packages/nextjs/scaffold.config.ts`.
-
-Run smart contract test with `yarn hardhat:test`
-
-- Edit your smart contracts in `packages/hardhat/contracts`
-- Edit your frontend homepage at `packages/nextjs/app/page.tsx`. For guidance on [routing](https://nextjs.org/docs/app/building-your-application/routing/defining-routes) and configuring [pages/layouts](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts) checkout the Next.js documentation.
-- Edit your deployment scripts in `packages/hardhat/deploy`
+Visit your app on: `http://localhost:3000`
 
 ## 🚀 Setup The Graph Integration
 
@@ -100,26 +168,6 @@ Update your package.json in packages/hardhat with the following command line opt
 
 ```
 "chain": "hardhat node --network hardhat --no-deploy --hostname 0.0.0.0"
-```
-
-**For foundry**
-
-Update your package.json in packages/foundry with the following command line option for the anvil chain.
-
-```
-"chain": "anvil --host 0.0.0.0 --config-out localhost.json",
-```
-
-Save the file and then restart your chain in its original window.
-
-```
-yarn chain
-```
-
-Redeploy your smart contracts.
-
-```
-yarn deploy
 ```
 
 You might also need to add a firewall exception for port 8432. As an example for Ubuntu... run the following command.
@@ -163,8 +211,6 @@ npm install -g ts-node
 You should get a build completed output along with the address of your Subgraph endpoint.
 
 ```
-Build completed: QmYdGWsVSUYTd1dJnqn84kJkDggc2GD9RZWK5xLVEMB9iP
-
 Deployed to http://localhost:8000/subgraphs/name/scaffold-eth/your-contract/graphql
 
 Subgraph endpoints:
@@ -178,113 +224,122 @@ Go ahead and head over to your subgraph endpoint and take a look!
 > Here is an example query…
 
 ```
-  {
-    greetings(first: 25, orderBy: createdAt, orderDirection: desc) {
-      id
-      greeting
-      premium
-      value
-      createdAt
-      sender {
-        address
-        greetingCount
-      }
-    }
+query MyQuery {
+  transfers(first: 10, orderBy: id, orderDirection: asc) {
+    blockNumber
+    blockTimestamp
+    from
+    id
+    to
+    transactionHash
+    value
   }
+}
 ```
 
-> If all is well and you’ve sent a transaction to your smart contract then you will see a similar data output!
-
-#### ✅ Step 4: Create Graph Client Artifacts ✅
-
-The Graph Client is a tool used to query GraphQL based applications and contains a lot of advanced features, such as client side composition or automatic pagination. A complete list of features and goals of this project can be found [here].(https://github.com/graphprotocol/graph-client?tab=readme-ov-file#features-and-goals)
-
-In order to utilize Graph-Client in our application, we need to build the artifacts needed for our frontend. To do this simply run...
+> If all is well and you've sent a transaction to your smart contract then you will see a similar data output!
 
 ```
-yarn graphclient:build
+{
+  "data": {
+    "transfers": [
+      {
+        "blockNumber": "3",
+        "blockTimestamp": "1743789408",
+        "from": "0x0000000000000000000000000000000000000000",
+        "id": "0x0c15fcaf5e6948686c0c98d9066a1539bf0642db25e06460a3eafb7c08dfca6501000000",
+        "to": "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266",
+        "transactionHash": "0x0c15fcaf5e6948686c0c98d9066a1539bf0642db25e06460a3eafb7c08dfca65",
+        "value": "21000000000000000000000000"
+      }
+    ]
+  }
+}
 ```
-
-After doing so, navigate to http://localhost:3000/subgraph and you should be able to see the GraphQL rendered in your application. If you don't see anything, make sure you've triggered an event in your smart contract.
-
-If you want to look at the query code for this, it can be found the component located in the subgraph folder `packages/nextjs/app/subgraph/_components/GreetingsTable.tsx`
-
-
-
-#### ✅ Side Quest: Run a Matchstick Test ✅
-
-Matchstick is a [unit testing framework](https://thegraph.com/docs/en/developing/unit-testing-framework/), developed by [LimeChain](https://limechain.tech/), that enables subgraph developers to test their mapping logic in a sandboxed environment and deploy their subgraphs with confidence!
-
-The project comes with a pre-written test located in `packages/subgraph/tests/asserts.test.ts`
-
-To test simply type....
-
-```
-yarn subgraph:test
-```
-
-> This will run `graph test` and automatically download the needed files for testing.
-
-You should receive the following output.
-
-```
-Fetching latest version tag...
-Downloading release from https://github.com/LimeChain/matchstick/releases/download/0.6.0/binary-macos-11-m1
-binary-macos-11-m1 has been installed!
-
-Compiling...
-
-💬 Compiling asserts...
-
-Igniting tests 🔥
-
-asserts
---------------------------------------------------
-  Asserts:
-    √ Greeting and Sender entities - 0.102ms
-
-All 1 tests passed! 😎
-
-[Thu, 07 Mar 2024 15:10:26 -0800] Program executed in: 1.838s.
-```
-
-> NOTE: If you get an error, you may trying passing `-d` flag `yarn subgraph:test -d`. This will run matchstick in docker container.
 
 ## Shipping to Subgraph Studio 🚀
 
 > NOTE: This step requires [deployment of contract](https://docs.scaffoldeth.io/deploying/deploy-smart-contracts) to live network. Checkout list of [supported networks](https://thegraph.com/docs/networks).
 
 1. Update the `packages/subgraph/subgraph.yaml` file with your contract address, network name, start block number(optional) :
-   ```diff
-   ...
-   -     network: localhost
-   +     network: sepolia
-         source:
-           abi: YourContract
-   +       address: "0x54FE7f8Db97e102D3b7d86cc34D885B735E31E8e"
-   +       startBlock: 5889410
-   ...
-   ```
-  TIP: For `startBlock` you can use block number of your deployed contract, which can be found by visiting deployed transaction hash in blockexplorer.
+
+    ```diff
+    ...
+    -     network: localhost
+    +     network: megaeth-testnet
+          source:
+            abi: YourToken
+    +       address: "0x54FE7f8Db97e102D3b7d86cc34D885B735E31E8e"
+    +       startBlock: 0
+    ...
+    ```
+
+    TIP: For `startBlock` you can use block number of your deployed contract, which can be found by visiting deployed transaction hash in block explorer.
 
 2. Create a new subgraph on [Subgraph Studio](https://thegraph.com/studio) and get "SUBGRAPH SLUG" and "DEPLOY KEY".
 
 3. Authenticate with the graph CLI:
-   ```sh
-   yarn graph auth --studio <DEPLOY KEY>
-   ```
 
-4. Deploy the subgraph to TheGraph Studio:
-   ```sh
-   yarn graph deploy --studio <SUBGRAPH SLUG>
-   ```
-   Once deployed, the CLI should output the Subgraph endpoints. Copy the HTTP endpoint and test your queries.
+    ```sh
+    yarn graph auth <DEPLOY KEY>
+    ```
 
-5. Update `packages/nextjs/components/ScaffoldEthAppWithProviders.tsx` to use the above HTTP subgraph endpoint:
-   ```diff
-   - const subgraphUri = "http://localhost:8000/subgraphs/name/scaffold-eth/your-contract";
-   + const subgraphUri = 'YOUR_SUBGRAPH_ENDPOINT';
-   ```
+4. Codegen and build
+
+```
+graph codegen && graph build
+```
+
+5. Deploy the subgraph to TheGraph Studio:
+
+    ```sh
+    yarn graph deploy <SUBGRAPH SLUG>
+    ```
+
+    Once deployed, the CLI should output the Subgraph endpoints. Copy the HTTP endpoint and test your queries.
+
+6. Update `packages/nextjs/components/ScaffoldEthAppWithProviders.tsx` to use the above HTTP subgraph endpoint:
+    ```diff
+    - const subgraphUri = "http://localhost:8000/subgraphs/name/scaffold-eth/your-contract";
+    + const subgraphUri = 'YOUR_SUBGRAPH_ENDPOINT';
+    ```
+
+## 🔄 Development Workflow
+
+### Smart Contract Development
+
+-   Edit contracts in `packages/hardhat/contracts`
+-   Run tests with `yarn hardhat:test`
+-   Deploy with `yarn deploy`
+
+### Frontend Development
+
+-   Edit pages in `packages/nextjs/app`
+-   Configure routing in `packages/nextjs/app/page.tsx`
+-   Customize UI components in `packages/nextjs/components`
+
+### Subgraph Development
+
+-   Define schema in `packages/subgraph/schema.graphql`
+-   Write mappings in `packages/subgraph/src/mappings`
+-   Test locally with `yarn subgraph:local-ship`
+
+## 🚀 Deployment Guide
+
+### Local Deployment
+
+1. Start local blockchain: `yarn chain`
+2. Deploy contracts: `yarn deploy`
+3. Start frontend: `yarn start`
+4. Deploy subgraph: `yarn subgraph:local-create` (only need to do this once)
+5. Deploy subgraph: `yarn subgraph:local-ship`
+
+### Testnet Deployment
+
+1. Deploy contracts to MEGAETH Testnet
+2. Update subgraph configuration (details below)
+3. Deploy subgraph to The Graph Network
+4. Deploy frontend to your preferred hosting service
 
 ## A list of all available root commands
 
@@ -383,6 +438,7 @@ yarn subgraph:deploy
 ```
 
 Deploy a subgraph to The Graph Network.
+
 ## Documentation
 
 Visit our [docs](https://docs.scaffoldeth.io) to learn how to start building with Scaffold-ETH 2.
@@ -394,3 +450,30 @@ To know more about its features, check out our [website](https://scaffoldeth.io)
 We welcome contributions to Scaffold-ETH 2!
 
 Please see [CONTRIBUTING.MD](https://github.com/scaffold-eth/scaffold-eth-2/blob/main/CONTRIBUTING.md) for more information and guidelines for contributing to Scaffold-ETH 2.
+
+## 🔧 Troubleshooting
+
+### Common Issues
+
+1. **Docker Issues**
+
+    - Ensure Docker is running
+    - Check port availability (8545, 8000, 8020, 8030)
+    - Try restarting Docker service
+
+2. **Contract Deployment Issues**
+
+    - Check network configuration
+    - Verify contract compilation
+    - Ensure sufficient test ETH
+
+3. **Subgraph Issues**
+    - Check Docker logs
+    - Verify contract addresses
+    - Ensure proper schema definition
+
+### Getting Help
+
+-   Check [Scaffold-ETH 2 Documentation](https://docs.scaffoldeth.io)
+-   Join our [Discord Community](https://discord.gg/scaffold-eth)
+-   Open an [Issue](https://github.com/your-org/mega-eth-subgraph-workshop/issues)

@@ -159,6 +159,11 @@ const config: HardhatUserConfig = {
       url: "https://alfajores-forno.celo-testnet.org",
       accounts: [deployerPrivateKey],
     },
+    megaTestnet: {
+      url: "https://carrot.megaeth.com/rpc",
+      chainId: 6342,
+      accounts: [deployerPrivateKey],
+    },
   },
   // configuration for harhdat-verify plugin
   etherscan: {

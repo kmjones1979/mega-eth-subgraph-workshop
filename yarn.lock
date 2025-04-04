@@ -6242,7 +6242,7 @@ __metadata:
     typescript: <5.6.0
     usehooks-ts: ~3.1.0
     vercel: ~39.1.3
-    viem: 2.23.0
+    viem: 2.24.3
     wagmi: 2.14.11
     zustand: ~5.0.0
   languageName: unknown
@@ -18530,26 +18530,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ox@npm:0.6.7":
-  version: 0.6.7
-  resolution: "ox@npm:0.6.7"
-  dependencies:
-    "@adraffy/ens-normalize": ^1.10.1
-    "@noble/curves": ^1.6.0
-    "@noble/hashes": ^1.5.0
-    "@scure/bip32": ^1.5.0
-    "@scure/bip39": ^1.4.0
-    abitype: ^1.0.6
-    eventemitter3: 5.0.1
-  peerDependencies:
-    typescript: ">=5.4.0"
-  peerDependenciesMeta:
-    typescript:
-      optional: true
-  checksum: 99acb683ff1cf78749f2b4230d3c208b8cdea0b3bf2bff0db564207917ae6833093b203cb7b9853fc8ec642ca0c8c87cd70a50eab9ff9944c55bf990436112b5
-  languageName: node
-  linkType: hard
-
 "ox@npm:0.6.9":
   version: 0.6.9
   resolution: "ox@npm:0.6.9"
@@ -22847,9 +22827,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"viem@npm:2.23.0":
-  version: 2.23.0
-  resolution: "viem@npm:2.23.0"
+"viem@npm:2.24.3":
+  version: 2.24.3
+  resolution: "viem@npm:2.24.3"
   dependencies:
     "@noble/curves": 1.8.1
     "@noble/hashes": 1.7.1
@@ -22857,14 +22837,14 @@ __metadata:
     "@scure/bip39": 1.5.4
     abitype: 1.0.8
     isows: 1.0.6
-    ox: 0.6.7
-    ws: 8.18.0
+    ox: 0.6.9
+    ws: 8.18.1
   peerDependencies:
     typescript: ">=5.0.4"
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 5c7c9654f579aac9896a2464f9f3d38a30e614ef03457f50b795da318e6503ab0ad14141288524955746ad721ca777a08a4f9bfb16cc22c0a709fdff6b9bb3bf
+  checksum: 87369f065a6ca44e38e1dfb2bad90e027bb7cdc4c09a2e5c6bd681c34656aa07ac1e04349c590eb914045d02f88308d3d24952d11d6da4abbed0177183381e6a
   languageName: node
   linkType: hard
 

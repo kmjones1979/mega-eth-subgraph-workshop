@@ -1,26 +1,34 @@
-specVersion: 0.0.4
-description: Greetings
+specVersion: 1.3.0
+description: YourToken
 repository: https://github.com/scaffold-eth/se-2/packages/subgraph/
 schema:
   file: ./src/schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: YourContract
+    name: YourToken
     network: localhost
     source:
-      abi: YourContract
-      address: "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+      abi: YourToken
+      address: "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.6
+      apiVersion: 0.0.9
       language: wasm/assemblyscript
       entities:
-        - Greeting
-        - Sender
+        - Approval
+        - GreetingChange
+        - OwnershipTransferred
+        - Transfer
       abis:
-        - name: YourContract
-          file: ./abis/localhost_YourContract.json
+        - name: YourToken
+          file: ./abis/localhost_YourToken.json
       eventHandlers:
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
         - event: GreetingChange(indexed address,string,bool,uint256)
           handler: handleGreetingChange
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
       file: ./src/mapping.ts

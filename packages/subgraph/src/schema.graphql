@@ -1,17 +1,39 @@
-type Greeting @entity {
-  id: ID!
-  sender: Sender!
-  greeting: String!
-  premium: Boolean
-  value: BigInt
-  createdAt: BigInt!
-  transactionHash: String!
+type Approval @entity(immutable: true) {
+    id: Bytes!
+    owner: Bytes! # address
+    spender: Bytes! # address
+    value: BigInt! # uint256
+    blockNumber: BigInt!
+    blockTimestamp: BigInt!
+    transactionHash: Bytes!
 }
 
-type Sender @entity {
-  id: ID!
-  address: Bytes!
-  greetings: [Greeting!] @derivedFrom(field: "sender")
-  createdAt: BigInt!
-  greetingCount: BigInt!
+type GreetingChange @entity(immutable: true) {
+    id: Bytes!
+    greetingSetter: Bytes! # address
+    newGreeting: String! # string
+    premium: Boolean! # bool
+    value: BigInt! # uint256
+    blockNumber: BigInt!
+    blockTimestamp: BigInt!
+    transactionHash: Bytes!
+}
+
+type OwnershipTransferred @entity(immutable: true) {
+    id: Bytes!
+    previousOwner: Bytes! # address
+    newOwner: Bytes! # address
+    blockNumber: BigInt!
+    blockTimestamp: BigInt!
+    transactionHash: Bytes!
+}
+
+type Transfer @entity(immutable: true) {
+    id: Bytes!
+    from: Bytes! # address
+    to: Bytes! # address
+    value: BigInt! # uint256
+    blockNumber: BigInt!
+    blockTimestamp: BigInt!
+    transactionHash: Bytes!
 }
