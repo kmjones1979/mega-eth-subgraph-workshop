@@ -314,9 +314,13 @@ yarn deploy --network megaTestnet
 
 4. Codegen and build
 
-```
-graph codegen && graph build
-```
+    ```sh
+    yarn graph codegen
+    ```
+
+    ```sh
+    yarn graph build
+    ```
 
 5. Deploy the subgraph to TheGraph Studio:
 
