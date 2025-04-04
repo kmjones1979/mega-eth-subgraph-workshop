@@ -14,10 +14,6 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
  * @author BuidlGuidl
  */
 contract YourToken is Ownable, ERC20 {
-    // State Variables
-
-    // Events: a way to emit log statements from smart contract that can be listened to by external parties
-    event GreetingChange(address indexed greetingSetter, string newGreeting, bool premium, uint256 value);
 
     // Constructor: Called once on contract deployment
     // Check packages/hardhat/deploy/00_deploy_your_contract.ts
