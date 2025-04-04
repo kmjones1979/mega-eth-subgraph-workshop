@@ -257,6 +257,34 @@ query MyQuery {
 }
 ```
 
+## Deploying to MEGA ETH Testnet
+
+1. Generate a deployer key
+
+```
+yarn generate
+```
+
+2. Fund the deployer
+
+A MEGA ETH faucet can be found on the [MEGA ETH Testnet Website](https://testnet.megaeth.com/)
+
+If you need to add the chain to Metamask, you can do so by going [here](https://www.megaexplorer.xyz/) and clicking the Metamask MegaETH Testnet icon on the bottom right of the explorer.
+
+```
+yarn account
+```
+
+3. Deploy to MEGA ETH Testnet
+
+```
+yarn deploy --network megaTestnet
+```
+
+[Here](https://www.megaexplorer.xyz/address/0x9C61D2Ac8e57554cB09c1dbF7B591a520dD54d5C) is an example deployment of the contract which comes with this repo.
+
+> A note about contract verification, currently this is not very easy to do on MEGA ETH Testnet so we don't recommend it. We will update this workshop once the steps are more easily defined.
+
 ## Shipping to Subgraph Studio 🚀
 
 > NOTE: This step requires [deployment of contract](https://docs.scaffoldeth.io/deploying/deploy-smart-contracts) to live network. Checkout list of [supported networks](https://thegraph.com/docs/networks).
@@ -269,7 +297,7 @@ query MyQuery {
     +     network: megaeth-testnet
           source:
             abi: YourToken
-    +       address: "0x54FE7f8Db97e102D3b7d86cc34D885B735E31E8e"
+    +       address: "0x9C61D2Ac8e57554cB09c1dbF7B591a520dD54d5C"
     +       startBlock: 0
     ...
     ```
