@@ -1,6 +1,6 @@
 # MEGAETH Subgraph Workshop
 
-This repo is an example full stack dapp that can be easily deployed to MEGAETH. It comes with an example contract (ERC20) configured for deployment with Harhat, a frontend integration with React (NextJS) and a working Subgraph which can all be deployed locally or directly to MEGAETH's Testnet.
+This repo is an example full stack dapp that can be easily deployed to MEGAETH. It comes with an example contract (ERC20) configured for deployment with Hardhat, a frontend integration with React (NextJS) and a working Subgraph which can all be deployed locally or directly to MEGAETH's Testnet.
 
 ## 🎯 Project Overview
 
@@ -75,7 +75,7 @@ Edit your smart contract located in `packages/hardhat/contracts/YourToken.sol`
 
 Optionally modify the constructor with your own token name and symbol.
 
-```
+```solidity
     constructor(address _owner) ERC20("YourToken", "YT") Ownable(_owner) {
         _mint(_owner, 21000000000000000000000000);
     }
@@ -83,16 +83,13 @@ Optionally modify the constructor with your own token name and symbol.
 
 Optionally, modify the deploy script to take ownership of the contract.
 
-```
+```solidity
   const owner = "0x0000000000000000000000000000000000000000"; // add your address here
 
   await deploy("YourToken", {
     from: deployer,
-    // Contract constructor arguments
     args: [owner], // use the owner variable to set who owns the contract during deployment
     log: true,
-    // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
-    // automatically mining the contract deployment transaction. There is no effect on live networks.
     autoMine: true,
   });
 ```
@@ -144,13 +141,13 @@ Now that we have spun up our blockchain, started our frontend application and de
 
 First run the following to clean up any old data. Do this if you need to reset everything.
 
-```
+```bash
 yarn subgraph:clean-node
 ```
 
 > We can now spin up a graph node by running the following command… 🧑‍🚀
 
-```
+```bash
 yarn subgraph:run-node
 ```
 
@@ -166,13 +163,13 @@ This will spin up all the containers for The Graph using docker-compose. You wil
 
 Update your package.json in packages/hardhat with the following command line option for the hardhat chain.
 
-```
+```bash
 "chain": "hardhat node --network hardhat --no-deploy --hostname 0.0.0.0"
 ```
 
 You might also need to add a firewall exception for port 8432. As an example for Ubuntu... run the following command.
 
-```
+```bash
 sudo ufw allow 8545/tcp
 ```
 
@@ -182,7 +179,7 @@ Now we can open up a fifth window to finish setting up The Graph. 😅 In this f
 
 > Note: You will only need to do this once.
 
-```
+```bash
 yarn subgraph:create-local
 ```
 
@@ -190,7 +187,7 @@ yarn subgraph:create-local
 
 Next we will ship our subgraph! You will need to give your subgraph a version after executing this command. (e.g. 0.0.1).
 
-```
+```bash
 yarn subgraph:local-ship
 ```
 
@@ -204,7 +201,7 @@ yarn subgraph:local-ship
 
 > If you get an error ts-node you can install it with the following command
 
-```
+```bash
 npm install -g ts-node
 ```
 
@@ -223,7 +220,7 @@ Go ahead and head over to your subgraph endpoint and take a look!
 
 > Here is an example query…
 
-```
+```js
 query MyQuery {
   transfers(first: 10, orderBy: id, orderDirection: asc) {
     blockNumber
@@ -239,21 +236,21 @@ query MyQuery {
 
 > If all is well and you've sent a transaction to your smart contract then you will see a similar data output!
 
-```
+```json
 {
-  "data": {
-    "transfers": [
-      {
-        "blockNumber": "3",
-        "blockTimestamp": "1743789408",
-        "from": "0x0000000000000000000000000000000000000000",
-        "id": "0x0c15fcaf5e6948686c0c98d9066a1539bf0642db25e06460a3eafb7c08dfca6501000000",
-        "to": "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266",
-        "transactionHash": "0x0c15fcaf5e6948686c0c98d9066a1539bf0642db25e06460a3eafb7c08dfca65",
-        "value": "21000000000000000000000000"
-      }
-    ]
-  }
+    "data": {
+        "transfers": [
+            {
+                "blockNumber": "3",
+                "blockTimestamp": "1743789408",
+                "from": "0x0000000000000000000000000000000000000000",
+                "id": "0x0c15fcaf5e6948686c0c98d9066a1539bf0642db25e06460a3eafb7c08dfca6501000000",
+                "to": "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266",
+                "transactionHash": "0x0c15fcaf5e6948686c0c98d9066a1539bf0642db25e06460a3eafb7c08dfca65",
+                "value": "21000000000000000000000000"
+            }
+        ]
+    }
 }
 ```
 
@@ -261,7 +258,7 @@ query MyQuery {
 
 1. Generate a deployer key
 
-```
+```bash
 yarn generate
 ```
 
@@ -271,13 +268,13 @@ A MEGA ETH faucet can be found on the [MEGA ETH Testnet Website](https://testnet
 
 If you need to add the chain to Metamask, you can do so by going [here](https://www.megaexplorer.xyz/) and clicking the Metamask MegaETH Testnet icon on the bottom right of the explorer.
 
-```
+```bash
 yarn account
 ```
 
 3. Deploy to MEGA ETH Testnet
 
-```
+```bash
 yarn deploy --network megaTestnet
 ```
 
@@ -308,33 +305,34 @@ yarn deploy --network megaTestnet
 
 3. Authenticate with the graph CLI:
 
-    ```sh
-    yarn graph auth <DEPLOY KEY>
-    ```
+```bash
+yarn graph auth <DEPLOY KEY>
+```
 
 4. Codegen and build
 
-    ```sh
-    yarn graph codegen
-    ```
+```bash
+yarn graph codegen
+```
 
-    ```sh
-    yarn graph build
-    ```
+```bash
+yarn graph build
+```
 
 5. Deploy the subgraph to TheGraph Studio:
 
-    ```sh
-    yarn graph deploy <SUBGRAPH SLUG>
-    ```
+```bash
+yarn graph deploy <SUBGRAPH SLUG>
+```
 
     Once deployed, the CLI should output the Subgraph endpoints. Copy the HTTP endpoint and test your queries.
 
 6. Update `packages/nextjs/components/ScaffoldEthAppWithProviders.tsx` to use the above HTTP subgraph endpoint:
-    ```diff
-    - const subgraphUri = "http://localhost:8000/subgraphs/name/scaffold-eth/your-contract";
-    + const subgraphUri = 'YOUR_SUBGRAPH_ENDPOINT';
-    ```
+
+```diff
+- const subgraphUri = "http://localhost:8000/subgraphs/name/scaffold-eth/your-contract";
++ const subgraphUri = 'YOUR_SUBGRAPH_ENDPOINT';
+```
 
 ## 🔄 Development Workflow
 
@@ -379,7 +377,7 @@ yarn deploy --network megaTestnet
 
 ### graph
 
-```sh
+```bash
 yarn graph
 ```
 
@@ -387,7 +385,7 @@ Shortcut to run `@graphprotocol/graph-cli` scoped to the subgraph package.
 
 ### run-node
 
-```sh
+```bash
 yarn subgraph:run-node
 ```
 
@@ -395,7 +393,7 @@ Spin up a local graph node (requires Docker).
 
 ### stop-node
 
-```sh
+```bash
 yarn subgraph:stop-node
 ```
 
@@ -403,7 +401,7 @@ Stop the local graph node.
 
 ### clean-node
 
-```sh
+```bash
 yarn clean-node
 ```
 
@@ -411,7 +409,7 @@ Remove the data from the local graph node.
 
 ### local-create
 
-```sh
+```bash
 yarn subgraph:create-local
 ```
 
@@ -419,7 +417,7 @@ Create your local subgraph (only required once).
 
 ### abi-copy
 
-```sh
+```bash
 yarn subgraph:abi-copy
 ```
 
@@ -427,7 +425,7 @@ Copy the contracts ABI from the hardhat/deployments folder. Generates the networ
 
 ### codegen
 
-```sh
+```bash
 yarn subgraph:codegen
 ```
 
@@ -435,7 +433,7 @@ Generates AssemblyScript types from the subgraph schema and the contract ABIs.
 
 ### build
 
-```sh
+```bash
 yarn subgraph:build
 ```
 
@@ -443,7 +441,7 @@ Compile and check the mapping functions.
 
 ### local-deploy
 
-```sh
+```bash
 yarn subgraph:deploy-local
 ```
 
@@ -451,7 +449,7 @@ Deploy a local subgraph.
 
 ### local-ship
 
-```sh
+```bash
 yarn subgraph:local-ship
 ```
 
@@ -459,7 +457,7 @@ Run all the required commands to deploy a local subgraph (abi-copy, codegen, bui
 
 ### deploy
 
-```sh
+```bash
 yarn subgraph:deploy
 ```
 
@@ -500,6 +498,7 @@ Please see [CONTRIBUTING.MD](https://github.com/scaffold-eth/scaffold-eth-2/blob
 
 ### Getting Help
 
--   Check [Scaffold-ETH 2 Documentation](https://docs.scaffoldeth.io)
--   Join our [Discord Community](https://discord.gg/scaffold-eth)
+-   Read the [The Graph Documentation](https://thegraph.com/docs/en/)
+-   Read the [Scaffold-ETH 2 Documentation](https://docs.scaffoldeth.io)
+-   Join our [Telegram Community](https://t.me/graphhackers)
 -   Open an [Issue](https://github.com/your-org/mega-eth-subgraph-workshop/issues)
