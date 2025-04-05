@@ -354,7 +354,7 @@ yarn deploy --network megaTestnet
 
 -   Define schema in `packages/subgraph/schema.graphql`
 -   Write mappings in `packages/subgraph/src/mappings`
--   Test locally with `yarn subgraph:local-ship`
+-   Create a subgraph locally with `yarn subgraph:local-ship`
 
 ## 🚀 Deployment Guide
 
@@ -368,10 +368,12 @@ yarn deploy --network megaTestnet
 
 ### Testnet Deployment
 
-1. Deploy contracts to MEGAETH Testnet
-2. Update subgraph configuration (details below)
-3. Deploy subgraph to The Graph Network
-4. Deploy frontend to your preferred hosting service
+1. Create a deployer account: `yarn generate`
+2. Fund the deployer account
+3. Deploy contracts to MEGAETH Testnet: `yarn deploy --network megaTestnet`
+4. Update subgraph configuration (details below)
+5. Deploy subgraph to The Graph Network
+6. Deploy frontend to your preferred hosting service
 
 ## A list of all available root commands
 
@@ -414,14 +416,6 @@ yarn subgraph:create-local
 ```
 
 Create your local subgraph (only required once).
-
-### local-remove
-
-```sh
-yarn subgraph:remove-local
-```
-
-Delete a local subgprah.
 
 ### abi-copy
 
